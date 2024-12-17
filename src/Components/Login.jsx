@@ -1,13 +1,24 @@
 import { useState } from "react";
+import axios from 'axios';
 
 
 export default function Login() {
+
+
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert(`The name you entered was: ${username}`);
+
+        axios.post("http://localhost:3000/login",{
+            username : username,
+            password: password,
+        })
+
+        setUserName("");
+        setPassword("");
     }
 
 
@@ -15,11 +26,11 @@ export default function Login() {
         <div className="h-screen overflow-auto">
             <div className=" flex flex-col bg-white justify-center items-center h-screen">
                 <div
-                    className="bg-white text-gray-800 pt-3 pb-[5rem] rounded-2xl border-2 max-w-md text-center space-y-5">
+                    className="bg-white text-gray-800 pt-3 pb-[5rem] rounded-2xl border-2 max-w-md text-center space-y-5 border-gray-300">
                     <div>
                         <h1 className="font-bold text-3xl">Login</h1>
                     </div>
-                    <form className="space-y-5">
+                    <form className="space-y-5" onSubmit={handleSubmit}>
                         <input className="border-2 w-[20rem] p-2 rounded-lg pt-3 pb-3"
                                type="text"
                                placeholder="Username"
@@ -32,12 +43,13 @@ export default function Login() {
                                value={password}
                                onChange={(e) => setPassword(e.target.value)}
                         />
+                        <button onClick={handleSubmit}
+                                className="border-2 w-[20rem] p-2 rounded-lg text-white bg-[#264DCB] pt-3 pb-3">Login
+                        </button>
                     </form>
-                    <button onClick={handleSubmit}
-                            className="border-2 w-[20rem] p-2 rounded-lg text-white bg-[#264DCB] pt-3 pb-3">Login
-                    </button>
+
                     <button
-                            className="border-2 w-[20rem] p-2 rounded-lg pt-3 pb-3">
+                        className="border-2 w-[20rem] p-2 rounded-lg pt-3 pb-3">
                         <div className="flex flex-row items-center justify-center space-x-1">
                             <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
